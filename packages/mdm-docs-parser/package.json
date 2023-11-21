@@ -1,0 +1,21 @@
+{
+  "name": "mdm",
+  "module": "index.ts",
+  "main": "index.ts",
+  "dependencies": {
+    "log-symbols": "^6.0.0",
+    "minimist": "^1.2.8",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.5",
+    "bun-types": "latest",
+    "rimraf": "^5.0.5"
+  },
+  "scripts": {
+    "start": "bun index.ts",
+    "dev": "bun run clean && bun index.ts",
+    "clean": "rimraf output"
+  },
+  "type": "module"
+}

@@ -1,0 +1,3 @@
+[submodule "packages/mdm-docs-parser/device-management"]
+	path = packages/mdm-docs-parser/device-management
+	url = git@github.com:apple/device-management.git
