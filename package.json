@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "kandji-typings",
   "private": true,
   "scripts": {
     "build": "turbo build",
