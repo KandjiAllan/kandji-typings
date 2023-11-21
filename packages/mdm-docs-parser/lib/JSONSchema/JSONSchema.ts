@@ -12,6 +12,19 @@ class JSONSchema {
   private schema = {};
   constructor(private includeMeta: boolean = false) {}
 
+  _strip(word: string) {
+    return word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g, "");
+  }
+
+  _hasNumber(word: string) {
+    const reg = new RegExp(/[0-9]/, "g");
+    return reg.test(word);
+  }
+
+  _stripAppleBundleId(bundle?: string) {
+    return bundle?.replace("com.apple", "").split(".").at(-1);
+  }
+
   _evaluatePayloadKey(payloadKey: PayloadResponseKeys) {
     const {
       // Taken out, but unused..
@@ -115,11 +128,14 @@ class JSONSchema {
       schema;
 
     let root: any = {
-      title,
+      // title: this._hasNumber(title)
+      //   ? this._stripAppleBundleId(payload?.payloadtype) || this._strip(title)
+      //   : this._strip(title),
+      title: payload?.payloadtype || this._strip(title), // Least chance for collisions
       description,
       type: "object",
       additionalProperties: false,
-      ...(this.includeMeta && { _meta: { payload, reasons } }),
+      ...(this.includeMeta && { _meta: { payload, reasons, title } }),
       properties: {},
       required: [],
     };
@@ -156,12 +172,12 @@ class JSONSchema {
     this.schema = root;
   }
 
-  writeTo(file: BunFile, dir?: string) {
+  async writeTo(file: BunFile, dir?: string) {
     if (dir && !fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
 
-    Bun.write(file, JSON.stringify(this.schema, null, 2));
+    return Bun.write(file, JSON.stringify(this.schema, null, 2));
   }
 }
 

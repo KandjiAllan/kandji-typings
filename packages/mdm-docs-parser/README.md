@@ -20,15 +20,15 @@ After cloning, run `git submodule update --init` to initialize the `device-manag
 
 Example run to generate JSON Schema files for all available MDM Profile/Command schemas:
 
-`bun run dev --out=file`
+`bun run dev --out=json`
 
 Example run to generate JSON Schema files for all available MDM Profile schemas:
 
-`bun run dev --out=file --kind=profiles`
+`bun run dev --out=json --kind=profiles`
 
 Similarly, an example run to generate JSON Schema files for all available MDM Command schemas:
 
-`bun run dev --out=file --kind=commands`
+`bun run dev --out=json --kind=commands`
 
 You can get the output to stdout instead:
 
@@ -36,9 +36,9 @@ You can get the output to stdout instead:
 
 Verbose output can provide some more information if necessary:
 
-`bun run dev --out=file --kind=commands --verbose`
+`bun run dev --out=json --kind=commands --verbose`
 
 Metadata from the payload fields is automatically kept and stored under `_meta`
 tags within the root schema, and within each key (if applies). You can stop this with:
 
-`bun run dev --out=file --kind=profiles --exclude_meta`
+`bun run dev --out=json --kind=profiles --exclude_meta`

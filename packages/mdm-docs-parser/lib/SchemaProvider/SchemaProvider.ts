@@ -4,6 +4,7 @@ import { join } from "node:path";
 import yaml from "yaml";
 
 export type SchemaProviderLoc = "repo";
+export type FileKind = "profiles" | "commands" | "decl-configs";
 
 export default class SchemaProvider<T> {
   constructor(private location: SchemaProviderLoc = "repo") {}
@@ -26,7 +27,7 @@ export default class SchemaProvider<T> {
     "commonpayloadkeys",
   ];
 
-  async getFiles(directoryPath: string) {
+  static async getFiles(directoryPath: string) {
     try {
       const fileNames = await readdir(directoryPath);
       const filePaths = fileNames.map((fn) => join(directoryPath, fn));
@@ -36,7 +37,7 @@ export default class SchemaProvider<T> {
     }
   }
 
-  async readYamlFile(filename: string) {
+  async readYamlFile(filename: string): Promise<T> {
     const file = Bun.file(filename);
     const yamlFileContent = await file.text();
     const parsedYaml: T = yaml.parse(yamlFileContent);
@@ -73,7 +74,7 @@ export default class SchemaProvider<T> {
 
   async getMDMProfiles() {
     if (this.location === "repo") {
-      const profiles = await this.getFiles(
+      const profiles = await SchemaProvider.getFiles(
         SchemaProvider.DEVICE_MANAGEMENT_REPO_PROFILES
       );
       return profiles?.filter(
@@ -87,10 +88,33 @@ export default class SchemaProvider<T> {
 
   async getMDMCommands() {
     if (this.location === "repo") {
-      const commands = await this.getFiles(
+      const commands = await SchemaProvider.getFiles(
         SchemaProvider.DEVICE_MANAGEMENT_REPO_COMMANDS
       );
       return commands;
+    }
+  }
+
+  async getDeclarativeMDMConfigs() {
+    if (this.location === "repo") {
+      const configs = await SchemaProvider.getFiles(
+        SchemaProvider.DEVICE_MANAGEMENT_REPO_DECL_CONFIGS
+      );
+      return configs;
+    }
+  }
+
+  async get(kind: FileKind) {
+    if (kind === "profiles") {
+      return this.getMDMProfiles();
+    }
+
+    if (kind === "commands") {
+      return this.getMDMCommands();
+    }
+
+    if (kind === "decl-configs") {
+      return this.getDeclarativeMDMConfigs();
     }
   }
 }

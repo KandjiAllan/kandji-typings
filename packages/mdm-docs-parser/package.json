@@ -1,8 +1,15 @@
 {
   "name": "@kandji-inc/mdm-docs-parser",
-  "module": "index.ts",
+  "type": "module",
   "main": "index.ts",
+  "module": "index.ts",
+  "scripts": {
+    "clean": "rimraf output",
+    "generate": "bun run clean && bun index.ts",
+    "start": "bun index.ts"
+  },
   "dependencies": {
+    "json-schema-to-typescript": "^13.1.1",
     "log-symbols": "^6.0.0",
     "minimist": "^1.2.8",
     "yaml": "^2.3.4"
@@ -12,12 +19,5 @@
     "@types/node": "^20.9.3",
     "bun-types": "latest",
     "rimraf": "^5.0.5"
-  },
-  "scripts": {
-    "start": "bun index.ts",
-    "dev": "bun run clean && bun index.ts --out=file",
-    "dev-pydantic": "bun run clean && bun index.ts --out=file --exclude_meta",
-    "clean": "rimraf output"
-  },
-  "type": "module"
+  }
 }
