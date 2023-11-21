@@ -1,5 +1,5 @@
 {
-  "name": "mdm",
+  "name": "@repo/mdm-docs-parser",
   "module": "index.ts",
   "main": "index.ts",
   "dependencies": {
@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@types/minimist": "^1.2.5",
+    "@types/node": "^20.9.3",
     "bun-types": "latest",
     "rimraf": "^5.0.5"
   },
