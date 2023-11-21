@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "bun index.ts",
-    "dev": "bun run clean && bun index.ts",
+    "dev": "bun run clean && bun index.ts --out=file",
     "clean": "rimraf output"
   },
   "type": "module"
