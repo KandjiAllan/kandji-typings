@@ -1,5 +1,5 @@
 {
-  "name": "@repo/mdm-docs-parser",
+  "name": "@kandji-inc/mdm-docs-parser",
   "module": "index.ts",
   "main": "index.ts",
   "dependencies": {
@@ -16,6 +16,7 @@
   "scripts": {
     "start": "bun index.ts",
     "dev": "bun run clean && bun index.ts --out=file",
+    "dev-pydantic": "bun run clean && bun index.ts --out=file --exclude_meta",
     "clean": "rimraf output"
   },
   "type": "module"
